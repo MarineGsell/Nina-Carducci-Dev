@@ -58,9 +58,11 @@
     });
 
     $(".gallery").on("click", ".nav-link", $.fn.mauGallery.methods.filterByTag);
+    // Click sur la flèche précédente
     $(".gallery").on("click", ".mg-prev", () =>
       $.fn.mauGallery.methods.prevImage(options.lightboxId)
     );
+    // Click sur la flèche suivante
     $(".gallery").on("click", ".mg-next", () =>
       $.fn.mauGallery.methods.nextImage(options.lightboxId)
     );
@@ -120,80 +122,96 @@
       $(`#${lightboxId}`).modal("toggle");
     },
     prevImage() {
+      // Stockage de l'image actuellement affichée dans la modale
       let activeImage = null;
+      // Sélection de toutes les images de la galerie
       $("img.gallery-item").each(function() {
+        // Si l'image courante à la même source que l'image de la modale
         if ($(this).attr("src") === $(".lightboxImage").attr("src")) {
           activeImage = $(this);
         }
       });
+      // Récupération du filtre sélectionné
       let activeTag = $(".tags-bar span.active-tag").data("images-toggle");
+      // Création du tableau pour stocker les images à parcourir
       let imagesCollection = [];
+      // Si le filtre selctionné est "tous"
       if (activeTag === "all") {
+        // On parcourt toutes les images
         $(".item-column").each(function() {
           if ($(this).children("img").length) {
+            // On les stocke dans le tableau
             imagesCollection.push($(this).children("img"));
           }
         });
       } else {
+        // On parcourt toutes les images
         $(".item-column").each(function() {
+          // On récupère le filtre actif
           if (
             $(this)
               .children("img")
               .data("gallery-tag") === activeTag
           ) {
+            // On stocke les images correspondantes au filtre dans le tableau
             imagesCollection.push($(this).children("img"));
           }
         });
       }
-      let index = 0,
-        next = null;
-
-      $(imagesCollection).each(function(i) {
-        if ($(activeImage).attr("src") === $(this).attr("src")) {
-          index = i ;
-        }
-      });
-      next =
-        imagesCollection[index] ||
-        imagesCollection[imagesCollection.length - 1];
-      $(".lightboxImage").attr("src", $(next).attr("src"));
+      // Trouver l'index actuel
+      let indexImg = imagesCollection.findIndex(img => 
+        $(img).attr("src") === $(".lightboxImage").attr("src")
+      );
+      // Trouver l'index précédent 
+      let indexPrev = indexImg > 0 ? indexImg - 1 : imagesCollection.length - 1;
+      // L'image de la modale est l'image qui correpond à next
+      $(".lightboxImage").attr("src", $(imagesCollection[indexPrev]).attr("src"));
     },
     nextImage() {
+      // Stockage de l'image actuellement affichée dans la modale
       let activeImage = null;
+      // Sélection de toutes les images de la galerie
       $("img.gallery-item").each(function() {
+        // Si l'image courante à la même source que l'image de la modale
         if ($(this).attr("src") === $(".lightboxImage").attr("src")) {
           activeImage = $(this);
         }
       });
+      // Récupération du filtre sélectionné
       let activeTag = $(".tags-bar span.active-tag").data("images-toggle");
+      // Création du tableau pour stocker les images à parcourir
       let imagesCollection = [];
+      // Si le filtre selctionné est "tous"
       if (activeTag === "all") {
+        // On parcourt toutes les images
         $(".item-column").each(function() {
           if ($(this).children("img").length) {
+            // On les stocke dans le tableau
             imagesCollection.push($(this).children("img"));
           }
         });
       } else {
+        // On parcourt toutes les images
         $(".item-column").each(function() {
+          // On récupère le filtre actif
           if (
             $(this)
               .children("img")
               .data("gallery-tag") === activeTag
           ) {
+            // On stocke les images dans le tableau
             imagesCollection.push($(this).children("img"));
           }
         });
       }
-      let index = 0,
-        next = null;
-
-      $(imagesCollection).each(function(i) {
-        if ($(activeImage).attr("src") === $(this).attr("src")) {
-          index = i;
-        }
-      });
-      next = imagesCollection[index] || imagesCollection[0];
-      $(".lightboxImage").attr("src", $(next).attr("src"));
+      // Trouver l'index actuel
+      let indexImg = imagesCollection.findIndex(img => 
+        $(img).attr("src") === $(".lightboxImage").attr("src")
+      );
+      // Trouver l'index précédent 
+      let indexNext = indexImg < imagesCollection.length - 1 ? indexImg + 1 : indexImg = 0;
+      // L'image de la modale est l'image qui correpond à next
+      $(".lightboxImage").attr("src", $(imagesCollection[indexNext]).attr("src"));
     },
     createLightBox(gallery, lightboxId, navigation) {
       gallery.append(`<div class="modal fade" id="${

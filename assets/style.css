@@ -90,10 +90,10 @@ body {
 	font-size: 14px;
 }
 
-#gallery {
+/* #gallery {
 	/*	min-height: 100vh; */
-}
-.title{
+/* } */
+.title{ 
 	text-align: center;
 	padding-block: 2em;
 }
