@@ -119,7 +119,9 @@
       $(`#${lightboxId}`)
         .find(".lightboxImage")
         .attr("src", element.attr("src"));
-      $(`#${lightboxId}`).modal("toggle");
+      // $(`#${lightboxId}`).modal("toggle");
+      const myModal = new bootstrap.Modal(document.getElementById(lightboxId));
+      myModal.toggle();
     },
     prevImage() {
       // Stockage de l'image actuellement affichée dans la modale
