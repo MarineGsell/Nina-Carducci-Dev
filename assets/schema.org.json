@@ -1,0 +1,15 @@
+{
+    "@context": "https://schema.org",
+    "@type": "Photographe",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bordeaux",
+      "addressCountry": "FR",
+      "postalCode": "33200",
+      "streetAddress": "68 avenue Alsace-Lorraine"
+    },
+    "name": "Nina Carducci",
+    "openingHours": "Mo-Fr 10:00-19:00",
+    "telephone": "05 56 67 78 89",
+    "url": "https://marinegsell.github.io/Nina-Carducci-Dev/"
+  }
